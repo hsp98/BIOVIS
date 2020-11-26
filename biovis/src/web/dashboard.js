@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import * as React from 'react';
 
 class Dashboard extends React.Component {
