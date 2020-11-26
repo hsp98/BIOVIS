@@ -1,13 +1,15 @@
-import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
+//inline styles
 const styles = {
   paper: {
     display: 'flex',
@@ -21,13 +23,76 @@ const styles = {
   input: {
     marginTop: '20px',
   },
+  errorMessage: {
+    color: 'red',
+  },
 };
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      username: '',
+      password: '', //not a secure way to store the passsword - needs updating
+      showError: false,
+      errorMessage: '',
+    };
   }
+
+  handleUsernameChange = (event) => {
+    //event.target.value is the username input's value
+    this.setState({ username: event.target.value });
+  };
+
+  handlePasswordChange = (event) => {
+    //event.target.value is the password input's value
+    this.setState({ password: event.target.value });
+  };
+
+  handleLoginSubmit = () => {
+    //putting these in vars so we don't have to repeatedly fetch state
+    const username = this.state.username;
+    const password = this.state.password;
+
+    const isUsernameVerified = this.verifyUsername(username);
+    const isPasswordVerified = this.verifyPassword(password);
+    console.log(isUsernameVerified);
+    console.log(isPasswordVerified);
+    if (isUsernameVerified && isPasswordVerified) {
+      this.setState({ showError: false, errorMessage: '' });
+
+      // //To-do: Implement login logic, should look something like this
+      // const userObject = DatabaseCall(username, password); //database call needs to return a user object
+
+      // //set a login session variable
+      // localStorage.setItem('userObject', userObject); //store user object in localStorage
+      // localStorage.setItem('isLoggedIn', true);
+
+      //redirect the user
+    } else {
+      isUsernameVerified
+        ? this.setState({ showError: true, errorMessage: 'Password must be at least 8 characters.' }) //if username is verified then password has the error
+        : this.setState({ showError: true, errorMessage: 'Username must be at least 5 characters.' }); //username not verified
+    }
+  };
+
+  verifyUsername = (username) => {
+    //only condition is that username cannot be empty
+    if (username.length > 5) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  verifyPassword = (password) => {
+    //password cannot be empty
+    if (password.length > 5) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   render() {
     return (
@@ -40,30 +105,42 @@ class Login extends React.Component {
             Login
           </Typography>
           <form className={styles.form} noValidate>
+            {/* username field */}
             <TextField
               variant="outlined"
+              value={this.state.username}
               style={styles.input}
               required
               fullWidth
-              id="emailField"
               label="Email"
-              autoComplete="email"
+              autoComplete="email" //shows emails that user has previously entered
+              onChange={this.handleUsernameChange}
               autoFocus
             />
+            {/* password field */}
             <TextField
               variant="outlined"
+              value={this.state.password}
               style={styles.input}
               required
               fullWidth
               label="Password"
               type="password"
-              id="password"
+              onChange={this.handlePasswordChange}
             />
-            <Button type="submit" fullWidth variant="contained" color="primary" style={{ marginTop: '10px' }}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              style={{ marginTop: '10px' }}
+              onClick={this.handleLoginSubmit}
+            >
               Login
             </Button>
+            {this.state.showError && <Typography style={styles.errorMessage}>{this.state.errorMessage}</Typography>}
             <Grid container>
               <Grid item xs>
+                {/* doesn't link anywhere yet - feature to be implemented later */}
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
