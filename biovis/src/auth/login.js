@@ -56,8 +56,7 @@ class Login extends React.Component {
 
     const isUsernameVerified = this.verifyUsername(username);
     const isPasswordVerified = this.verifyPassword(password);
-    console.log(isUsernameVerified);
-    console.log(isPasswordVerified);
+
     if (isUsernameVerified && isPasswordVerified) {
       this.setState({ showError: false, errorMessage: '' });
 
