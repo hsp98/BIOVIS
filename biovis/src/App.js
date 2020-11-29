@@ -1,8 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Login from './auth/login';
-import SignUp from './auth/signup';
-import Dashboard from './web/dashboard';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Login from "./auth/login";
+import SignUp from "./auth/signup";
+import Dashboard from "./web/dashboard";
+import BuySell from "./buysell/buysell";
 
 export default function App() {
   return (
@@ -30,6 +31,9 @@ export default function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/buysell">
+            <BuySell />
           </Route>
           <Route path="/">
             <Dashboard />
