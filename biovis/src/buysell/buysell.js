@@ -150,7 +150,9 @@ class BuySell extends React.Component {
             </Button>
           </form>
         </div>
-
+        <Typography component="h1" variant="h5" style={{ marginTop: 32 }}>
+          Order History
+        </Typography>
         <TableContainer component={Paper} style={{ marginTop: 24, width: 850 }}>
           <Table className={styles.table} aria-label="simple table">
             <TableHead>
