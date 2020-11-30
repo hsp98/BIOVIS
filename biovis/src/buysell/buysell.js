@@ -78,6 +78,12 @@ class BuySell extends React.Component {
       { type: "Type 3" },
       { type: "Type 4" },
     ];
+    const manufacturers = [
+      { companyName: "Company A", pricePerKg: 10 },
+      { companyName: "Company B", pricePerKg: 5 },
+      { companyName: "Company C", pricePerKg: 6 },
+      { companyName: "Company D", pricePerKg: 6 },
+    ];
     return (
       <Container component="main" maxWidth="xs">
         <div style={styles.paper}>
@@ -115,21 +121,23 @@ class BuySell extends React.Component {
               variant="outlined"
             />
 
-            <TextField
-              id="outlined-basic"
-              type="number"
-              onChange={this.handleWeightChange}
-              InputProps={{
-                inputProps: {
-                  min: 0,
-                },
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                ),
-              }}
-              label="Price"
+            <Autocomplete
+              id="combo-box-demo"
+              options={manufacturers}
+              getOptionLabel={(option) =>
+                option.companyName +
+                "     -     $" +
+                option.pricePerKg +
+                " Per Kg"
+              }
               style={{ width: 300, marginTop: 16 }}
-              variant="outlined"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select Company"
+                  variant="outlined"
+                />
+              )}
             />
 
             <Button
@@ -150,10 +158,10 @@ class BuySell extends React.Component {
                 <TableCell align="right">Order ID</TableCell>
                 <TableCell align="right">Byproduct Type</TableCell>
                 <TableCell align="right">Weight&nbsp;(Kg)</TableCell>
-                <TableCell align="right">Date</TableCell>
-                <TableCell align="right">Time</TableCell>
                 <TableCell align="right">Price Per Kg</TableCell>
                 <TableCell align="right">Total Payable</TableCell>
+                <TableCell align="right">Date</TableCell>
+                <TableCell align="right">Time</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -164,10 +172,10 @@ class BuySell extends React.Component {
                   </TableCell>
                   <TableCell align="right">{row.byproductType}</TableCell>
                   <TableCell align="right">{row.weight}</TableCell>
-                  <TableCell align="right">{row.date}</TableCell>
-                  <TableCell align="right">{row.time}</TableCell>
                   <TableCell align="right">${row.pricePerKg}</TableCell>
                   <TableCell align="right">${row.totalPayable}</TableCell>
+                  <TableCell align="right">{row.date}</TableCell>
+                  <TableCell align="right">{row.time}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
