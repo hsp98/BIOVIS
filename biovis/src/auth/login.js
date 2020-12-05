@@ -9,6 +9,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import { withRouter } from 'react-router-dom';
+import {auth} from '../firebase';
+
 //inline styles
 const styles = {
   paper: {
@@ -60,14 +63,18 @@ class Login extends React.Component {
     if (isUsernameVerified && isPasswordVerified) {
       this.setState({ showError: false, errorMessage: '' });
 
-      // //To-do: Implement login logic, should look something like this
-      // const userObject = DatabaseCall(username, password); //database call needs to return a user object
-
-      // //set a login session variable
-      // localStorage.setItem('userObject', userObject); //store user object in localStorage
-      // localStorage.setItem('isLoggedIn', true);
-
-      //redirect the user
+      auth
+        .signInWithEmailAndPassword(this.state.username, this.state.password)
+        .then((data) => {
+            console.log(data.user)
+            localStorage.setItem("email", this.state.username)
+            this.props.history.push('/buysell')
+            
+        })
+        .catch((error) => {
+          this.setState({ showError: true, errorMessage: error.message })
+            console.log(error);   
+        })
     } else {
       isUsernameVerified
         ? this.setState({ showError: true, errorMessage: 'Password must be at least 8 characters.' }) //if username is verified then password has the error
@@ -157,4 +164,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

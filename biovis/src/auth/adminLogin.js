@@ -7,10 +7,10 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
-import {auth,firestore} from '../firebase';
-
 import { Redirect } from 'react-router-dom';
+
 import { withRouter } from 'react-router-dom';
+import {auth} from '../firebase';
 
 //inline styles
 const styles = {
@@ -31,13 +31,14 @@ const styles = {
   },
 };
 
-class SignUp extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      actualUsername: 'biovis123@gmail.com',
+      actualPassword: 'Biovis123',
       username: '',
       password: '', //not a secure way to store the passsword - needs updating
-      confirmPassword: '',
       showError: false,
       errorMessage: '',
     };
@@ -53,15 +54,7 @@ class SignUp extends React.Component {
     this.setState({ password: event.target.value });
   };
 
-  handleConfirmPasswordChange = (event) => {
-    //event.target.value is the password input's value
-    if(this.state.password != event.target.value){
-     this.setState({showError:true,errorMessage: "password doesn't match!!!"})}
-    else{
-      this.setState({showError:false,errorMessage: ""})}
-    this.setState({ confirmPassword: event.target.value });
-  };
-  handleLoginSubmit = async () => {
+  handleLoginSubmit = () => {
     //putting these in vars so we don't have to repeatedly fetch state
     const username = this.state.username;
     const password = this.state.password;
@@ -70,36 +63,17 @@ class SignUp extends React.Component {
     const isPasswordVerified = this.verifyPassword(password);
 
     if (isUsernameVerified && isPasswordVerified) {
+        if( username == this.state.actualUsername && password == this.state.actualPassword)
+        {
+            this.props.history.push('/admin')
+        }
       this.setState({ showError: false, errorMessage: '' });
 
-      try{
-        auth
-        .createUserWithEmailAndPassword(
-            this.state.username, 
-            this.state.password
-           ).then(async (data)=> {
-      const userRef = firestore.doc(`user/${data.user.uid}`);
-      const snapshot = await userRef.get();
-      if (!snapshot.exists) {
-        const { username, password } = this.state;
-        try {
-          await userRef.set({
-              email: username,
-              password: password
-          });
-        } catch (error) {
-          console.error("Error creating user document", error);
-        }}
-       this.props.history.push('/login')
-       console.log(data)})
-      }catch(error)
-      {console.log(error);}
-    } else{
+    } else {
       isUsernameVerified
         ? this.setState({ showError: true, errorMessage: 'Password must be at least 8 characters.' }) //if username is verified then password has the error
         : this.setState({ showError: true, errorMessage: 'Username must be at least 5 characters.' }); //username not verified
     }
-   
   };
 
   verifyUsername = (username) => {
@@ -121,7 +95,6 @@ class SignUp extends React.Component {
   };
 
   render() {
-    console.log(this.props)
     return (
       <Container component="main" maxWidth="xs">
         <div style={styles.paper}>
@@ -129,7 +102,7 @@ class SignUp extends React.Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            SignUP
+            Login
           </Typography>
           <form className={styles.form} noValidate>
             {/* username field */}
@@ -155,17 +128,6 @@ class SignUp extends React.Component {
               type="password"
               onChange={this.handlePasswordChange}
             />
-            {/* new password field */}
-             <TextField
-              variant="outlined"
-              value={this.state.confirmPassword}
-              style={styles.input}
-              required
-              fullWidth
-              label="New Password"
-              type="password"
-              onChange={this.handleConfirmPasswordChange}
-            />
             <Button
               fullWidth
               variant="contained"
@@ -173,7 +135,7 @@ class SignUp extends React.Component {
               style={{ marginTop: '10px' }}
               onClick={this.handleLoginSubmit}
             >
-              SignUp
+              Login
             </Button>
             {this.state.showError && <Typography style={styles.errorMessage}>{this.state.errorMessage}</Typography>}
             <Grid container>
@@ -196,4 +158,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default withRouter(SignUp);
+export default withRouter(Login);

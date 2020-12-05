@@ -4,14 +4,15 @@ import Login from "./auth/login";
 import SignUp from "./auth/signup";
 import Dashboard from "./web/dashboard";
 import BuySell from "./buysell/buysell";
-
+import Admin from "./admin/admin";
+import AdminLogin from "./auth/adminLogin";
 export default function App() {
   return (
     <Router>
       <div>
         <nav>
           <ul>
-            <li>
+            {/* <li>
               <Link to="/home">Home</Link>
             </li>
             <li>
@@ -19,7 +20,7 @@ export default function App() {
             </li>
             <li>
               <Link to="/login">Login</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
 
@@ -34,6 +35,12 @@ export default function App() {
           </Route>
           <Route path="/buysell">
             <BuySell />
+          </Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          <Route path="/adminLogin">
+            <AdminLogin />
           </Route>
           <Route path="/">
             <Dashboard />

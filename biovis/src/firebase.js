@@ -1,4 +1,8 @@
-import firebase from 'firebase'
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+
+
   var firebaseConfig = {
     apiKey: "AIzaSyAqt50ORCfP0VknDxuq5F16N2XUbPDPEcs",
     authDomain: "biovis.firebaseapp.com",
@@ -10,6 +14,8 @@ import firebase from 'firebase'
     measurementId: "G-W98TGFFXGX"
   };
 
-  var fire = firebase.initializeApp(firebaseConfig);
-  export default fire;
   
+  
+firebase.initializeApp(firebaseConfig);
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
