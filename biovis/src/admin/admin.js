@@ -301,4 +301,4 @@ export class admin extends Component {
     }
 }
 
-export default admin
+export default withRouter(admin);

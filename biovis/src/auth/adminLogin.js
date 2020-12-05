@@ -31,7 +31,7 @@ const styles = {
   },
 };
 
-class Login extends React.Component {
+class AdminLogin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -158,4 +158,4 @@ class Login extends React.Component {
   }
 }
 
-export default withRouter(Login);
+export default withRouter(AdminLogin);

@@ -15,7 +15,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import {auth,firestore} from '../firebase';
-import  { Redirect } from 'react-router-dom'
+import  { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 
