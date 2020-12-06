@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
-import {auth,firestore} from '../firebase';
+import { auth, firestore } from '../firebase';
 
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -55,10 +55,11 @@ class SignUp extends React.Component {
 
   handleConfirmPasswordChange = (event) => {
     //event.target.value is the password input's value
-    if(this.state.password != event.target.value){
-     this.setState({showError:true,errorMessage: "password doesn't match!!!"})}
-    else{
-      this.setState({showError:false,errorMessage: ""})}
+    if (this.state.password != event.target.value) {
+      this.setState({ showError: true, errorMessage: 'Passwords do not match!' });
+    } else {
+      this.setState({ showError: false, errorMessage: '' });
+    }
     this.setState({ confirmPassword: event.target.value });
   };
   handleLoginSubmit = async () => {
@@ -72,34 +73,32 @@ class SignUp extends React.Component {
     if (isUsernameVerified && isPasswordVerified) {
       this.setState({ showError: false, errorMessage: '' });
 
-      try{
-        auth
-        .createUserWithEmailAndPassword(
-            this.state.username, 
-            this.state.password
-           ).then(async (data)=> {
-      const userRef = firestore.doc(`user/${data.user.uid}`);
-      const snapshot = await userRef.get();
-      if (!snapshot.exists) {
-        const { username, password } = this.state;
-        try {
-          await userRef.set({
-              email: username,
-              password: password
-          });
-        } catch (error) {
-          console.error("Error creating user document", error);
-        }}
-       this.props.history.push('/login')
-       console.log(data)})
-      }catch(error)
-      {console.log(error);}
-    } else{
+      try {
+        auth.createUserWithEmailAndPassword(this.state.username, this.state.password).then(async (data) => {
+          const userRef = firestore.doc(`user/${data.user.uid}`);
+          const snapshot = await userRef.get();
+          if (!snapshot.exists) {
+            const { username, password } = this.state;
+            try {
+              await userRef.set({
+                email: username,
+                password: password,
+              });
+            } catch (error) {
+              console.error('Error creating user document', error);
+            }
+          }
+          this.props.history.push('/login');
+          console.log(data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
       isUsernameVerified
         ? this.setState({ showError: true, errorMessage: 'Password must be at least 8 characters.' }) //if username is verified then password has the error
         : this.setState({ showError: true, errorMessage: 'Username must be at least 5 characters.' }); //username not verified
     }
-   
   };
 
   verifyUsername = (username) => {
@@ -121,7 +120,6 @@ class SignUp extends React.Component {
   };
 
   render() {
-    console.log(this.props)
     return (
       <Container component="main" maxWidth="xs">
         <div style={styles.paper}>
@@ -129,7 +127,7 @@ class SignUp extends React.Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            SignUP
+            Sign Up
           </Typography>
           <form className={styles.form} noValidate>
             {/* username field */}
@@ -156,7 +154,7 @@ class SignUp extends React.Component {
               onChange={this.handlePasswordChange}
             />
             {/* new password field */}
-             <TextField
+            <TextField
               variant="outlined"
               value={this.state.confirmPassword}
               style={styles.input}
@@ -184,8 +182,8 @@ class SignUp extends React.Component {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/login" variant="body2">
+                  {'Already have an account? Login'}
                 </Link>
               </Grid>
             </Grid>

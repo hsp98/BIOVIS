@@ -10,7 +10,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { withRouter } from 'react-router-dom';
-import {auth} from '../firebase';
+import { auth } from '../firebase';
 
 //inline styles
 const styles = {
@@ -66,15 +66,14 @@ class Login extends React.Component {
       auth
         .signInWithEmailAndPassword(this.state.username, this.state.password)
         .then((data) => {
-            console.log(data.user)
-            localStorage.setItem("email", this.state.username)
-            this.props.history.push('/buysell')
-            
+          localStorage.setItem('loggedIn', true);
+          localStorage.setItem('email', this.state.username);
+          this.props.history.push('/buysell');
         })
         .catch((error) => {
-          this.setState({ showError: true, errorMessage: error.message })
-            console.log(error);   
-        })
+          this.setState({ showError: true, errorMessage: error.message });
+          console.log(error);
+        });
     } else {
       isUsernameVerified
         ? this.setState({ showError: true, errorMessage: 'Password must be at least 8 characters.' }) //if username is verified then password has the error

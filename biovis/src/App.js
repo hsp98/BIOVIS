@@ -1,31 +1,28 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Login from "./auth/login";
-import SignUp from "./auth/signup";
-import Dashboard from "./web/dashboard";
-import BuySell from "./buysell/buysell";
-import Admin from "./admin/admin";
-import AdminLogin from "./auth/adminLogin";
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import Login from './auth/login';
+import SignUp from './auth/signup';
+import Dashboard from './web/dashboard';
+import BuySell from './buysell/buysell';
+import Admin from './admin/admin';
+import AdminLogin from './auth/adminLogin';
+
+const PrivateRoute = (path) => {
+  console.log(localStorage.getItem('loggedIn'));
+  return (
+    <Route path={path}>
+      {localStorage.getItem('loggedIn') === 'true' ? <BuySell /> : <Redirect to={{ pathname: '/login' }} />}
+    </Route>
+  );
+};
+
 export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            {/* <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              <Link to="/signup">Sign up</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li> */}
-          </ul>
-        </nav>
-
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
+
         <Switch>
           <Route path="/signup">
             <SignUp />
@@ -33,9 +30,7 @@ export default function App() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/buysell">
-            <BuySell />
-          </Route>
+          <PrivateRoute path="/buysell" />
           <Route path="/admin">
             <Admin />
           </Route>
@@ -43,7 +38,7 @@ export default function App() {
             <AdminLogin />
           </Route>
           <Route path="/">
-            <Dashboard />
+            <Redirect to={{ pathname: '/login' }} />
           </Route>
         </Switch>
       </div>
