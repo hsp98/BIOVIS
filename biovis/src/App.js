@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './auth/login';
 import SignUp from './auth/signup';
-import Dashboard from './web/dashboard';
 import BuySell from './buysell/buysell';
 import Admin from './admin/admin';
 import AdminLogin from './auth/adminLogin';
+import Payment from './buysell/payment';
 
 const PrivateRoute = (path) => {
   console.log(localStorage.getItem('loggedIn'));
@@ -29,6 +29,9 @@ export default function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/payment">
+            <Payment />
           </Route>
           <PrivateRoute path="/buysell" />
           <Route path="/admin">
