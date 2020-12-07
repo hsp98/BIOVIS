@@ -7,8 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-
 import { withRouter } from 'react-router-dom';
 import { auth } from '../firebase';
 

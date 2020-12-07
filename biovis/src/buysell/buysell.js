@@ -19,7 +19,6 @@ import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 //Import for tabs
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -170,7 +169,11 @@ class Buy extends React.Component {
 
   handleLogoutSubmit = (e) => {
     localStorage.setItem('loggedIn', false);
-    this.props.history.push('/home');
+    this.props.history.push('/login');
+  };
+
+  handlePayment = (e) => {
+    this.props.history.push('/payment');
   };
 
   handleByProductChange = (e) => {
@@ -225,6 +228,18 @@ class Buy extends React.Component {
           }}
         >
           LogOut
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={this.handlePayment}
+          style={{
+            float: 'right',
+            marginRight: '5px',
+          }}
+        >
+          Make Payment
         </Button>
 
         <AppBar position="static">
