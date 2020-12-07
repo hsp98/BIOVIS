@@ -11,14 +11,6 @@ import { Autocomplete } from '@material-ui/lab';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-//inline styles
-const styles = {
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-};
-
 class Payment extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +40,7 @@ class Payment extends React.Component {
   };
 
   render() {
+    //inline styles
     const styles = {
       main: {
         marginTop: '45px',
@@ -58,6 +51,7 @@ class Payment extends React.Component {
       },
     };
 
+    //sample manufacturers since payment feature won't be fully implemented to accept payments
     const manufacturers = [
       { companyName: 'Company A', pricePerKg: 10 },
       { companyName: 'Company B', pricePerKg: 5 },
