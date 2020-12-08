@@ -49,6 +49,7 @@ const styles = {
   },
 };
 
+// function for Tab panel : Design and values of it.
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
     return (
@@ -76,7 +77,7 @@ export class admin extends Component {
           sellData: []
         };
       }
-
+// adding value to state and inserting value to firebase collection buy and sell when ever is required.
       componentDidMount() {
         this.setState({
           email: localStorage.getItem("email"),
@@ -113,7 +114,7 @@ export class admin extends Component {
     handleChange = () => {
 
     }
-
+// on logout send to home.
     handleLogoutSubmit = (e) => {
         this.props.history.push('/home')
                 
@@ -122,7 +123,7 @@ export class admin extends Component {
     reloadPage = () =>{
       window.location.reload();
     }
-
+// updateding vaule for sell collection based on the parameter provided. for Approving sell.
     sellApproved = (e) =>{
       const db = firestore
 
@@ -139,7 +140,7 @@ export class admin extends Component {
     setTimeout(() => {this.reloadPage()},1000);
       
     }
-
+// updateding vaule for sell collection based on the parameter provided. for rejecting sell.
     sellRejected = (e) =>{
       const db = firestore
 
@@ -156,7 +157,7 @@ export class admin extends Component {
     setTimeout(() => {this.reloadPage()},1000);
       
     }
-
+// updateding vaule for sell collection based on the parameter provided. for Approving buy.
 
     approved = (e) =>{
       const db = firestore
@@ -174,7 +175,7 @@ export class admin extends Component {
     setTimeout(() => {this.reloadPage()},1000);
       
     }
-
+// updateding vaule for sell collection based on the parameter provided. for Rejecting buy.
     rejected = (e) =>{
       const db = firestore
 
