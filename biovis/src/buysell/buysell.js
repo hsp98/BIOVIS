@@ -46,6 +46,7 @@ const styles = {
   },
 };
 
+//used this function for setting the values in the system.
 function OrderHistory(orderId, byproductType, weight, date, time, pricePerKg, totalPayable) {
   return {
     orderId,
@@ -57,6 +58,8 @@ function OrderHistory(orderId, byproductType, weight, date, time, pricePerKg, to
     totalPayable,
   };
 }
+
+// this function is used for designing tab panel.
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -77,6 +80,7 @@ function TabPanel(props) {
   );
 }
 
+# class is containing tje state values in system and added some default values.
 class Buy extends React.Component {
   constructor(props) {
     super(props);
@@ -92,6 +96,7 @@ class Buy extends React.Component {
     };
   }
 
+// it sets the email values and store the data in buy and sell collection of when ever triggered.
   componentDidMount() {
     this.setState({
       email: localStorage.getItem('email'),
@@ -131,6 +136,7 @@ class Buy extends React.Component {
   //   }
   // }
 
+// adding values in firebase buy collection and some are default.
   handleRequestSubmit = async (e) => {
     const db = firestore;
     e.preventDefault();
@@ -149,6 +155,7 @@ class Buy extends React.Component {
     // this.renderRedirect()
   };
 
+// adding values in firabase sell collection and some are default.
   handlesellerSubmit = async (e) => {
     const db = firestore;
     e.preventDefault();
@@ -166,6 +173,7 @@ class Buy extends React.Component {
     window.location.reload();
     // this.renderRedirect()
   };
+
 
   handleLogoutSubmit = (e) => {
     localStorage.setItem('loggedIn', false);
