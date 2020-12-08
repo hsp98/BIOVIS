@@ -154,6 +154,15 @@ class Login extends React.Component {
                 </Link>
               </Grid>
             </Grid>
+      
+            <Grid container>
+              <Grid item xs>
+                {/* doesn't link anywhere yet - feature to be implemented later */}
+                <Link href="/admin" variant="body2">
+                  Admin Account
+                </Link>
+              </Grid>  
+            </Grid>
           </form>
         </div>
       </Container>
