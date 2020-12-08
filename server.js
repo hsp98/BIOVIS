@@ -9,7 +9,8 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/biovis/build/"));
 
 app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname + "/biovis/build/index.html"));
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname, "biovis", "build", "index.html"));
 });
 
 app.listen(process.env.PORT || 5000, function () {
